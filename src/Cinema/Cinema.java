@@ -26,6 +26,7 @@ public class Cinema {
         int currentIncome = 0;
         int totalSeats = rows * seatsInRow;
 
+
         boolean continueMenu = true;
         while (continueMenu) {
             int choice = choiceMenu(scanner);
@@ -36,10 +37,11 @@ public class Cinema {
                     break;
 
                 case 2:
-                    buyTicket(scanner, seatsCinema, ticketsBought, currentIncome, totalSeats);
-                    // Actualizamos las estadísticas (esto es una simplificación, en un caso real se pasaría un objeto)
-                    ticketsBought++;
-                    currentIncome += calculateTicketPrice(scanner.nextInt(), rows, totalSeats); // Se necesita recalcular para el ingreso
+                    int ticketPrice = buyTicket(scanner, seatsCinema, totalSeats);
+                    if (ticketPrice > 0) {
+                        ticketsBought++;
+                        currentIncome += ticketPrice;
+                    }
                     break;
 
                 case 3:
@@ -66,34 +68,45 @@ public class Cinema {
         System.out.println("3. Statistics");
         System.out.println("0. Exit");
         System.out.println("Choice a option 0-3:");
-        return scanner.nextInt();
+
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("WARNING: Invalid input. Please enter only numbers. Try again.");
+            }
+        }
+
     }
 
-    public static void buyTicket(Scanner scanner, char[][] seats, int ticketsBought, int currentIncome, int totalSeats) {
+    public static int buyTicket(Scanner scanner, char[][] seats, int totalSeats) {
         int rowNum;
         int seatNum;
 
         while (true) {
             System.out.println("\n:::::::::BUY TICKET:::::::::");
-            System.out.println("Enter a row number:");
-            rowNum = scanner.nextInt();
-            System.out.println("Enter a seat number in that row:");
-            seatNum = scanner.nextInt();
 
-            // Validación de rango
-            if (rowNum < 1 || rowNum > seats.length || seatNum < 1 || seatNum > seats[0].length) {
-                System.out.println("Wrong input! Please enter a valid seat.");
-                continue; // Vuelve al inicio del bucle
+            try {
+                rowNum = ReadValidInput.readValidInput(scanner, "Enter a row number:");
+                seatNum = ReadValidInput.readValidInput(scanner, "Enter a seat number in that row");
+
+                // Validación de rango
+                if (rowNum < 1 || rowNum > seats.length || seatNum < 1 || seatNum > seats[0].length) {
+                    System.out.println("Wrong input! Please enter a valid seat.");
+                    continue; // Vuelve al inicio del bucle
+                }
+
+                // Validación de disponibilidad
+                if (seats[rowNum - 1][seatNum - 1] == 'B') {
+                    System.out.println("That ticket has already been purchased!");
+                    continue; // Vuelve al inicio del bucle
+                }
+
+                // Salimos del bucle
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("WARNING: Invalid input. Please enter whole numbers");
             }
-
-            // Validación de disponibilidad
-            if (seats[rowNum - 1][seatNum - 1] == 'B') {
-                System.out.println("That ticket has already been purchased!");
-                continue; // Vuelve al inicio del bucle
-            }
-
-            // Si todo es correcto, salimos del bucle de validación
-            break;
         }
 
         int ticketPrice = calculateTicketPrice(rowNum, seats.length, totalSeats);
@@ -102,7 +115,7 @@ public class Cinema {
         // Marcamos el asiento y actualizamos
         seats[rowNum - 1][seatNum - 1] = 'B';
 
-        System.out.println("\nPress any button to back MENU CINEMA.");
+        return ticketPrice;
     }
 
     public static int calculateTicketPrice(int rowNum, int totalRows, int totalSeats) {
