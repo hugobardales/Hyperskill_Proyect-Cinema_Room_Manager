@@ -2,7 +2,7 @@ package Cinema;
 
 public class PrintCinema {
     public static void printSeatCinema(char[][] seatsCinema) {
-        System.out.println("Cinema:");
+        System.out.println("\nCinema:");
         System.out.print("  ");
 
         // Bucle para imprimir los números de las columnas
@@ -10,6 +10,7 @@ public class PrintCinema {
             System.out.print(i + " ");
         }
         System.out.println();
+
         // Bucles para imprimir las filas y asientos
         for (int i = 0; i < seatsCinema.length; i++) {
             System.out.print((i + 1) + " "); // Imprime el número de la fila

@@ -1,118 +1,137 @@
 package Cinema;
+
 import java.util.Scanner;
 
 public class Cinema {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int ticketBought;
-        int currentIncome;
 
-        int continueInnerLoop = 1;
-        int continueOuterLoop = 1;
-        int outerLoop = 1;
+        System.out.println(":::::::WELCOME - CINEMA MANAGER::::::::");
+        System.out.println("Setting the dimension of your Cinema");
+        System.out.println("------------------------------------");
 
+        // Reading row and seatInRow from the input user
+        int rows = ReadValidInput.readValidInput(scanner, "Enter the number of rows (1-9):");
+        int seatsInRow = ReadValidInput.readValidInput(scanner, "Enter the number of Seat in Row (1-9):");
 
-        // Creates and instantiated a object name cinema
-        PrintCinema printCinema = new PrintCinema();
-
-
-        System.out.println("Enter the number of rows:");
-        int rows = scanner.nextInt();
-
-        System.out.println("Enter the number of seats in each row:");
-        int seatsInRow = scanner.nextInt();
-
-        // Creates new char array
         char[][] seatsCinema = new char[rows][seatsInRow];
-
-        // Bucle externo
-        for(int i = 0; i < rows; i++) {
-            // Bucle interno
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < seatsInRow; j++) {
                 seatsCinema[i][j] = 'S';
             }
         }
 
+        // Variables para estadísticas
+        int ticketsBought = 0;
+        int currentIncome = 0;
+        int totalSeats = rows * seatsInRow;
 
-        do {
-            switch (choiceMenu(scanner)) {
+        boolean continueMenu = true;
+        while (continueMenu) {
+            int choice = choiceMenu(scanner);
+
+            switch (choice) {
                 case 1:
-                    do {
-                        printCinema.printSeatCinema(seatsCinema);
-
-                        System.out.println("Continue with this choice ? (Enter 1 for yes/ 2 for no):");
-                        continueInnerLoop = scanner.nextInt();
-                        break;
-
-                    } while (continueInnerLoop == 1);
+                    PrintCinema.printSeatCinema(seatsCinema);
+                    break;
 
                 case 2:
+                    buyTicket(scanner, seatsCinema, ticketsBought, currentIncome, totalSeats);
+                    // Actualizamos las estadísticas (esto es una simplificación, en un caso real se pasaría un objeto)
+                    ticketsBought++;
+                    currentIncome += calculateTicketPrice(scanner.nextInt(), rows, totalSeats); // Se necesita recalcular para el ingreso
+                    break;
 
-                    do {
-                        int rowNum = 0;
-                        int seatRow = 0;
+                case 3:
+                    showStatistics(ticketsBought, currentIncome, totalSeats);
+                    break;
 
-                        System.out.println("Enter a row number:");
-                        rowNum = scanner.nextInt();
+                case 0:
+                    continueMenu = false;
+                    System.out.println("Exiting program. Goodbye!");
+                    break;
 
-                        System.out.println("Enter a seat number in that row:");
-                        seatRow = scanner.nextInt();
-
-                        if (rowNum > rows || seatRow > seatsInRow) {
-                            System.out.println("Wrong input. Enter a valid parameter minor that " + rows + " " + seatsInRow);
-                            continue;
-
-                        }
-
-                        if () {
-                            // Refresh the map seats of Cinema
-                            seatsCinema[rowNum - 1][seatRow - 1] = 'B';
-
-                            // Body which calculate the price of seats
-                            int totalAsientos = rows * seatsInRow;
-                            int ticketPrice = 0;
-
-                            if (totalAsientos <= 60) {
-                                ticketPrice = 10;
-                            } else if (totalAsientos > 60) {
-                                int mitadFilas = rows / 2;
-                                int filasParteFrontal = mitadFilas;
-                                if (rowNum <= filasParteFrontal) {
-                                    ticketPrice = 10;
-                                } else {
-                                    ticketPrice = 8;
-                                }
-                            }
-                            System.out.println("Ticket price: $" + ticketPrice);
-                        }
-
-                        System.out.println("Continue with this choice ? (Enter 1 for yes/ 2 for no):");
-                        continueInnerLoop = scanner.nextInt();
-
-                    } while (continueInnerLoop == 1);
-
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
             }
-            System.out.println("Continue with this choice ? (Enter 1 for yes/ 2 for no):");
-            continueOuterLoop = scanner.nextInt();
-
-        } while (continueOuterLoop == 1);
-
-
+        }
+        scanner.close();
     }
 
-    public static int choiceMenu (Scanner scanner) {
-        int choiceGivenUser;
-
+    public static int choiceMenu(Scanner scanner) {
+        System.out.println("\n:::MENU CINEMA:::");
         System.out.println("1. Show seats");
         System.out.println("2. Buy a ticket");
         System.out.println("3. Statistics");
-        System.out.println("0. Exit ");
+        System.out.println("0. Exit");
+        System.out.println("Choice a option 0-3:");
+        return scanner.nextInt();
+    }
 
-        // The user choose a number 1 to 3 and 0 from the scanner input
-        choiceGivenUser = scanner.nextInt();
+    public static void buyTicket(Scanner scanner, char[][] seats, int ticketsBought, int currentIncome, int totalSeats) {
+        int rowNum;
+        int seatNum;
 
-        // Return a value
-        return choiceGivenUser;
+        while (true) {
+            System.out.println("\n:::::::::BUY TICKET:::::::::");
+            System.out.println("Enter a row number:");
+            rowNum = scanner.nextInt();
+            System.out.println("Enter a seat number in that row:");
+            seatNum = scanner.nextInt();
 
+            // Validación de rango
+            if (rowNum < 1 || rowNum > seats.length || seatNum < 1 || seatNum > seats[0].length) {
+                System.out.println("Wrong input! Please enter a valid seat.");
+                continue; // Vuelve al inicio del bucle
+            }
+
+            // Validación de disponibilidad
+            if (seats[rowNum - 1][seatNum - 1] == 'B') {
+                System.out.println("That ticket has already been purchased!");
+                continue; // Vuelve al inicio del bucle
+            }
+
+            // Si todo es correcto, salimos del bucle de validación
+            break;
+        }
+
+        int ticketPrice = calculateTicketPrice(rowNum, seats.length, totalSeats);
+        System.out.println("Ticket price: $" + ticketPrice);
+
+        // Marcamos el asiento y actualizamos
+        seats[rowNum - 1][seatNum - 1] = 'B';
+
+        System.out.println("\nPress any button to back MENU CINEMA.");
+    }
+
+    public static int calculateTicketPrice(int rowNum, int totalRows, int totalSeats) {
+        if (totalSeats <= 60) {
+            return 10;
+        } else {
+            int frontHalf = totalRows / 2;
+            return (rowNum <= frontHalf) ? 10 : 8;
+        }
+    }
+
+    public static void showStatistics(int ticketsBought, int currentIncome, int totalSeats) {
+        double percentage = ((double) ticketsBought / totalSeats) * 100;
+        int totalIncome = calculateTotalPossibleIncome(totalSeats, totalSeats / 9, 9); // Asumiendo 9 asientos por fila para un cálculo genérico
+
+        System.out.println("\n:::STATISTICS:::");
+        System.out.printf("Tickets bought: %d\n", ticketsBought);
+        System.out.printf("Percentage of seats sold: %.2f%%\n", percentage);
+        System.out.printf("Current income: $%d\n", currentIncome);
+        System.out.printf("Total possible income: $%d\n", totalIncome);
+    }
+
+    public static int calculateTotalPossibleIncome(int totalSeats, int totalRows, int seatsPerRow) {
+        if (totalSeats <= 60) {
+            return totalSeats * 10;
+        } else {
+            int frontHalf = totalRows / 2;
+            int backHalf = totalRows - frontHalf;
+            return (frontHalf * seatsPerRow * 10) + (backHalf * seatsPerRow * 8);
+        }
     }
 }

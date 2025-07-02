@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Hyperskill_Proyect-Cinema_Room_Manager.iml" filepath="$PROJECT_DIR$/Hyperskill_Proyect-Cinema_Room_Manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CinemaRoomManager.iml" filepath="$PROJECT_DIR$/CinemaRoomManager.iml" />
     </modules>
   </component>
 </project>
