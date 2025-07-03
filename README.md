@@ -2,6 +2,10 @@
 
 Este proyecto CLI en Java, simula un sistema de gestión de una sala de cine. Fue desarrollado para aplicar y demostrar conceptos fundamentales de programación en Java, incluyendo la programación orientada a objetos, manejo de excepciones, la gestión de datos y la creación de una interfaz de usuario interactiva en la consola.
 
+<p align="center">
+  <img src="https://github.com/hugobardales/Hyperskill_Proyect-Cinema_Room_Manager/blob/main/assests/CinemaRoomManager.gif" alt="Demostración del ejecutable">
+</p>
+
 ---
 
 ## 📋 Funcionalidades (Features)
@@ -58,9 +62,8 @@ El proyecto está organizado en tres clases para una máxima cohesión y bajo ac
    
 2.  **Navegar al directorio de la carpeta de descarga:**
  
-3.  **Abrimos una terminal**
+3.  **Abrimos una terminal y ejecutamos**
+   ```bash
+    java -jar CinemaRoomManager.jar
+   ```
    
-4.  **Ejecutar la aplicación:**
-![Demostración del ejecutable](https://github.com/hugobardales/Hyperskill_Proyect-Cinema_Room_Manager/blob/main/assests/CinemaRoomManager.gif)
-
-    
