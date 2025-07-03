@@ -1,4 +1,4 @@
-package Cinema;
+﻿package Cinema;
 
 import java.util.Scanner;
 
