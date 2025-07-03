@@ -1,6 +1,6 @@
 # Cinema Room Manager - Projecto en Java
 
-Este proyecto es una aplicación de consola en Java que simula un sistema de gestión de una sala de cine. Fue desarrollado para aplicar y demostrar conceptos fundamentales de programación en Java, incluyendo la programación orientada a objetos, la gestión de datos y la creación de una interfaz de usuario interactiva en la consola.
+Este proyecto CLI en Java, simula un sistema de gestión de una sala de cine. Fue desarrollado para aplicar y demostrar conceptos fundamentales de programación en Java, incluyendo la programación orientada a objetos, manejo de excepciones, la gestión de datos y la creación de una interfaz de usuario interactiva en la consola.
 
 ---
 
@@ -11,7 +11,7 @@ Este proyecto es una aplicación de consola en Java que simula un sistema de ges
 * **Compra de Tickets con Validación:** Sistema de compra que valida en tiempo real:
     * Que las coordenadas del asiento existan dentro de la sala.
     * Que el asiento no haya sido comprado previamente.
-* **Cálculo de Precios:** Lógica de negocio que asigna precios a los tickets basándose en el tamaño de la sala y la ubicación de la fila.
+* **Cálculo de Precios:** Lógica de negocio que asigna precios a los tickets basándose en el tamaño de la sala y la ubicación de la fila, la primera mitad de la fila tiene un precio de $10 y la segunda mitad de la fila $8.
 * **Estadísticas en Tiempo Real:** Muestra un resumen de la operación, incluyendo el número de tickets vendidos, el porcentaje de ocupación, los ingresos actuales y los ingresos totales posibles.
 * **Entrada de Datos Robusta:** Manejo de errores para asegurar que el usuario solo pueda introducir datos numéricos válidos donde sea requerido.
 
@@ -54,19 +54,13 @@ El proyecto está organizado en tres clases para una máxima cohesión y bajo ac
 
 ## 🚀 Cómo Ejecutar el Proyecto
 
-1.  **Clonar el repositorio:**
-    ```bash
-    git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
-    ```
-2.  **Navegar al directorio del proyecto:**
-    ```bash
-    cd tu-repositorio/src
-    ```
-3.  **Compilar todos los archivos Java:**
-    ```bash
-    javac Cinema/Cinema.java Cinema/PrintCinema.java Cinema/ReadValidInput.java
-    ```
+1.  **Descargamos CinemaRoomManager.jar**
+   
+2.  **Navegar al directorio de la carpeta de descarga:**
+ 
+3.  **Abrimos una terminal**
+   
 4.  **Ejecutar la aplicación:**
-    ```bash
-    java Cinema.Cinema
-    ```
+![Demostración del ejecutable](https://github.com/hugobardales/Hyperskill_Proyect-Cinema_Room_Manager/blob/main/assests/CinemaRoomManager.gif)
+
+    
