@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CinemaRoomManager:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CinemaRoomManager_jar</output-path>
+    <root id="archive" name="CinemaRoomManager.jar">
+      <element id="module-output" name="CinemaRoomManager" />
+    </root>
+  </artifact>
+</component>
